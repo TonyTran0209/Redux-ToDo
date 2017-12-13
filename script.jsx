@@ -1,30 +1,39 @@
 //////////////////////////////////////////////////
 // CONTROLLER
 //////////////////////////////////////////////////
+const todo = (state, action) => {
+    switch (action.type) {
+        case 'ADD_TODO':
+            return {
+                id: action.id,
+                text: action.text,
+                completed: false
+            };
+        case 'TOGGLE_TODO':
+            if (state.id !== action.id) {
+                return state;
+            }
+
+            return {
+                ...state,
+                completed: !state.completed
+            };
+        default:
+            return state;
+    }
+};
+
 const todos = (state = [], action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return [
                 ...state,
                 // current state + new state object in action
-                {
-                    id: action.id,
-                    text: action.text,
-                    completed: false // default value
-                }
+                todo(undefined, action)
             ];
         case 'TOGGLE_TODO':
             // clone array (shouldn't change original array)
-            return state.map(todo => {
-                if (todo.id !== action.id) {
-                    return todo;
-                }
-
-                return {
-                    ...todo,
-                    completed: !todo.completed // toggle completed status
-                };
-            });
+            return state.map(t => todo(t, action));
         default:
             return state; // return the current state
     }
