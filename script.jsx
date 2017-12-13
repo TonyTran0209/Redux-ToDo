@@ -13,6 +13,18 @@ const todos = (state = [], action) => {
                     completed: false // default value
                 }
             ];
+        case 'TOGGLE_TODO':
+            // clone array (shouldn't change original array)
+            return state.map(todo => {
+                if (todo.id !== action.id) {
+                    return todo;
+                }
+
+                return {
+                    ...todo,
+                    completed: !todo.completed // toggle completed status
+                };
+            });
         default:
             return state; // return the current state
     }
@@ -47,9 +59,53 @@ const testAddTodo = () => {
 };
 
 //////////////////////////////////////////////////
+// TEST FUNCTION: TOGGLE
+//////////////////////////////////////////////////
+const testToggleTodo = () => {
+    const stateBefore = [
+        {
+            id: 0,
+            text: 'Learn Redux',
+            completed: false
+        },
+        {
+            id: 1,
+            text: 'Go shopping',
+            completed: false
+        }
+    ];
+    const action = {
+        type: 'TOGGLE_TODO',
+        id: 1
+    };
+    const stateAfter = [
+        {
+            id: 0,
+            text: 'Learn Redux',
+            completed: false
+        },
+        {
+            id: 1,
+            text: 'Go shopping',
+            completed: true // change here
+        }
+    ];
+
+    // UnitTest: check reducer is pure function
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    // UnitTest: stateBefore + action = stateAfter
+    expect(
+        todos(stateBefore, action)
+    ).toEqual(stateAfter);
+};
+
+//////////////////////////////////////////////////
 // CALL FUNCTIONS
 //////////////////////////////////////////////////
 testAddTodo();
+testToggleTodo();
 console.log('All tests passed.') || displayInPreview('All tests passed.');
 
 
