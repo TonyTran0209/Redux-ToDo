@@ -61,8 +61,14 @@ const todoApp = (state = {}, action) => {
     };
 };
 
-const {createStore} = Redux;
-const store = createStore(todoApp);
+const {createStore,compose}  = Redux;
+// const store = createStore(todoApp);
+
+const store = createStore(todoApp, {}, compose(
+    // applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : noop => noop,
+    // batchedSubscribe(/* ... */)
+));
 
 /********** SHOW CONSOLE LOG **********/
 console.log('Initial state:');
