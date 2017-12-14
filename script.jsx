@@ -48,6 +48,21 @@ const visibilityFilter = (state = 'SHOW_ALL',
     }
 };
 
+const { combineReducers } = Redux;
+const todoApp = combineReducers({
+    todos,
+    visibilityFilter
+});
+
+/*
+const { combineReducers } = Redux;
+const todoApp = combineReducers({
+    todos: todos,
+    visibilityFilter: visibilityFilter
+});
+*/
+
+/*
 const todoApp = (state = {}, action) => {
     return {
         todos: todos(
@@ -60,6 +75,7 @@ const todoApp = (state = {}, action) => {
         )
     };
 };
+*/
 
 const {createStore,compose}  = Redux;
 // const store = createStore(todoApp);
