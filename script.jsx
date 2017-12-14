@@ -64,3 +64,47 @@ const store = createStore(todoApp, {}, compose(
     window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : noop => noop,
     // batchedSubscribe(/* ... */)
 ));
+
+/********** DECLARATION **********/
+const {Component} = React;
+let nextTodoId = 0;
+
+class TodoApp extends Component {
+    render() {
+        return (
+            <div>
+                <input ref={node => { this.input = node; }}/> {/*use react callback ref API*/}
+                <button onClick={() => {
+                    store.dispatch({
+                        type: 'ADD_TODO',
+                        text: this.input.value,
+                        id: nextTodoId++
+                    });
+                    this.input.value = ''; // clear after add
+                }}>
+                    Add Todo
+                </button>
+                <ul>
+                    {/*componet receive ToDos as a prop*/}
+                    {this.props.todos.map(todo =>
+                        <li key={todo.id}>
+                            {todo.text}
+                        </li>
+                    )}
+                </ul>
+            </div>
+        );
+    }
+}
+
+const render = () => {
+    ReactDOM.render(
+        <TodoApp
+            todos={store.getState().todos} // read current state of store => array (as a props)
+        />,
+        document.getElementById('root')
+    );
+};
+
+store.subscribe(render); // watching the changing store
+render();
