@@ -48,12 +48,16 @@ const visibilityFilter = (state = 'SHOW_ALL',
     }
 };
 
+/********** DECLARATION **********/
 const {combineReducers} = Redux;
 const todoApp = combineReducers({
     todos,
     visibilityFilter
 });
 
+// const {createStore} = Redux;
+// const store = createStore(todoApp);
+//==> Redux DevTools
 const {createStore, compose} = Redux;
 const store = createStore(todoApp, {}, compose(
     // applyMiddleware(thunk),
