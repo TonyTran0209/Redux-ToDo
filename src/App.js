@@ -111,8 +111,6 @@ const getVisibleTodos = (todos,
 
 class TodoApp extends Component {
     render() {
-        /*
-        */
         const {
             todos,
             visibilityFilter
@@ -121,10 +119,6 @@ class TodoApp extends Component {
             todos,
             visibilityFilter
         );
-        // const visibleTodos = getVisibleTodos(
-        //     this.props.todos,
-        //     this.props.visibilityFilter
-        // );
 
         return (
             <div>
@@ -193,7 +187,6 @@ class TodoApp extends Component {
 const render = () => {
     ReactDOM.render(
         <TodoApp
-            // todos={store.getState().todos}
             {...store.getState()} // read current state of store => array (as a props)
         />,
         document.getElementById('root')
