@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, compose, combineReducers } from 'redux'
+import {createStore, compose, combineReducers} from 'redux'
 
 /********** CONTROLLER **********/
 const todo = (state, action) => {
@@ -77,7 +77,9 @@ class TodoApp extends Component {
     render() {
         return (
             <div>
-                <input ref={node => { this.input = node; }}/> {/*use react callback ref API*/}
+                <input ref={node => {
+                    this.input = node;
+                }}/> {/*use react callback ref API*/}
                 <button onClick={() => {
                     store.dispatch({
                         type: 'ADD_TODO',
@@ -91,7 +93,19 @@ class TodoApp extends Component {
                 <ul>
                     {/*componet receive ToDos as a prop*/}
                     {this.props.todos && this.props.todos.map(todo =>
-                        <li key={todo.id}>
+                        <li key={todo.id}
+                            onClick={() => {
+                                store.dispatch({
+                                    type: 'TOGGLE_TODO',
+                                    id: todo.id
+                                });
+                            }}
+                            style={{
+                                textDecoration:
+                                    todo.completed ?
+                                        'line-through' :
+                                        'none'
+                            }}>
                             {todo.text}
                         </li>
                     )}
